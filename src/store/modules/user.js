@@ -24,6 +24,7 @@ const user = {
     },
     SET_TOKEN: (state, token) => {
       state.token = token
+      debugger
     },
     SET_INTRODUCTION: (state, introduction) => {
       state.introduction = introduction
@@ -52,15 +53,16 @@ const user = {
   },
 
   actions: {
-    // 用户名登录
+
     LoginByUsername({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
           const data = response.data
-          const userDetails = data.data.user_details
-          commit('SET_TOKEN', userDetails.token)
-          setToken(userDetails.token)
+          const userDetails = data.data[0].original
+          commit('SET_TOKEN', userDetails.access_token)
+          setToken(userDetails.access_token)
+          debugger
           resolve()
         }).catch(error => {
           reject(error)
@@ -68,26 +70,25 @@ const user = {
       })
     },
 
-    // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(response => {
-          if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
+          if (!response.data) {
             reject('error')
           }
           const data = response.data
-          const userDetails = data.data.user_details
-          if (userDetails.user_role) { // Verify that the returned roles are a non-null array
-            commit('SET_ROLES', userDetails.user_role)
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
-
-          commit('SET_NAME', userDetails.name)
+          const userDetails = data.data[0].original
+          // if (userDetails.user_role) { // Verify that the returned roles are a non-null array
+          //   commit('SET_ROLES', 'Admin')
+          // } else {
+          //   reject('getInfo: roles must be a non-null array !')
+          // }
+          commit('SET_ROLES', ['admin'])
+          commit('SET_NAME', userDetails.first_name)
           commit('SET_AVATAR', 'https://d2ln1xbi067hum.cloudfront.net/assets/default_user-951af10295a22e5f7fa2fa6165613c14.png')
           commit('SET_INTRODUCTION', 'Welcome')
-          commit('SET_USERID', userDetails.user_id)
-          commit('SET_TEAMID', userDetails.team_id)
+          commit('SET_USERID', userDetails.id)
+          // commit('SET_TEAMID', userDetails.team_id)
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -118,7 +119,6 @@ const user = {
       })
     },
 
-    // 动态修改权限
     ChangeRoles({ commit, dispatch }, role) {
       return new Promise(resolve => {
         commit('SET_TOKEN', role)
@@ -129,7 +129,7 @@ const user = {
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
           commit('SET_INTRODUCTION', data.introduction)
-          dispatch('GenerateRoutes', data) // 动态修改权限后 重绘侧边菜单
+          dispatch('GenerateRoutes', data)
           resolve()
         })
       })
