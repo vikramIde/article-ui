@@ -26,7 +26,8 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.roles.length === 0) { // Determine whether the current user has pulled the user_info information
         store.dispatch('GetUserInfo').then(res => { // Pull user_info
-          const roles = res.data.data.user_details.user_role // note: roles must be a array! such as: ['editor','develop']
+          // const roles = res.data.data.user_details.user_role // note: roles must be a array! such as: ['editor','develop']
+          const roles = ['admin']
           store.dispatch('GenerateRoutes', { roles }).then(() => { // Generate accessible routing tables based on roles
             router.addRoutes(store.getters.addRouters) // Dynamically add accessible routing tables
             next({ ...to, replace: true }) // The hack method ensures that addRoutes is complete, set the replace: true so the navigation will not leave a history record

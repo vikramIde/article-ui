@@ -5,11 +5,11 @@ const bast_url = 'http://127.0.0.1:8000/'
 
 export function loginByUsername(username, password) {
   const data = {
-    username,
+    'email': username,
     password
   }
   return request({
-    url: bast_url + '/api/auth',
+    url: bast_url + '/api/auth/login',
     method: 'post',
     data
   })
@@ -24,8 +24,8 @@ export function logout() {
 
 export function getUserInfo(token) {
   return request({
-    url: bast_url + '/api/auth/user/getinfo',
-    method: 'get'
+    url: bast_url + '/api/me',
+    method: 'post'
   })
 }
 
