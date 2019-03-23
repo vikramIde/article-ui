@@ -72,32 +72,6 @@ export const constantRouterMap = [
       }
     ]
   }
-  // {
-  //   path: '/documentation',
-  //   component: Layout,
-  //   redirect: '/documentation/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/documentation/index'),
-  //       name: 'Documentation',
-  //       meta: { title: 'documentation', icon: 'documentation', noCache: true }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/guide',
-  //   component: Layout,
-  //   redirect: '/guide/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/guide/index'),
-  //       name: 'Guide',
-  //       meta: { title: 'guide', icon: 'guide', noCache: true }
-  //     }
-  //   ]
-  // }
 ]
 
 export default new Router({
@@ -107,36 +81,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  {
-    path: '/settings',
-    component: Layout,
-    redirect: '/settings/index',
-    alwaysShow: true, // will always show the root menu
-    meta: {
-      title: 'Settings',
-      icon: 'user',
-      roles: ['admin'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'manage',
-        component: () => import('@/views/settings/users'),
-        name: 'ManageUsers',
-        meta: {
-          title: 'Manage Users'
-        }
-      },
-      {
-        path: 'location',
-        component: () => import('@/views/settings/location'),
-        name: 'Locations',
-        meta: {
-          title: 'Manage Location'
-          // if do not set roles, means: this page does not require permission
-        }
-      }
-    ]
-  },
+
   /** When your routing table is too long, you can split it into small modules**/
   componentsRouter,
 

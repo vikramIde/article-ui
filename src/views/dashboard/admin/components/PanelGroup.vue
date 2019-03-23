@@ -6,7 +6,7 @@
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Add Words</div>
+          <div class="card-panel-text">Total Posts</div>
           <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
         </div>
       </div>
@@ -17,7 +17,7 @@
           <svg-icon icon-class="message" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Total Links</div>
+          <div class="card-panel-text">Total Views</div>
           <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
         </div>
       </div>
